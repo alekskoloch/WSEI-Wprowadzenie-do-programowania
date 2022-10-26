@@ -142,6 +142,27 @@ namespace WSEI_Wprowadzenie_do_programowania
             return tab;
         }
 
+        static int[] sortTableMin(int[] tab)
+        {
+            int[] result = tab;
+            
+            for (int i = 0; i < result.Length; i++)
+            {
+                int minPos = i;
+                for (int j = i; j < result.Length; j++)
+                    if (result[j] < result[minPos])
+                        minPos = j;
+                if (minPos != i)
+                {
+                    int temp = result[i];
+                    result[i] = result[minPos];
+                    result[minPos] = temp;
+                }
+            }
+
+            return result;
+        }
+
         static T[] functionTable<T>(T[] tab, Func<T, T> foo, Func<T, bool> fbool)
         {
             for (int i = 0; i < tab.Length; i++)
@@ -157,22 +178,54 @@ namespace WSEI_Wprowadzenie_do_programowania
             {
                 Console.Write(table[i++]);
                 if (i != table.Length)
-                    Console.Write(" , ");
+                    Console.Write("|");
             }
             Console.Write("]");
+            Console.WriteLine();
+        }
+
+        static int fibonacci(int x)
+        {
+            if (x <= 0)
+                return 0;
+            else if (x == 1)
+                return 1;
+            else
+                return fibonacci(x - 1) + fibonacci(x - 2);
+        }
+
+        static int[] fibonacciSequence(int x)
+        {
+            int[] result = new int[x];
+            for (int i = 0; i < x; i++)
+                result[i] = fibonacci(i);
+            return result;
+        }
+
+        static T[] generateTable<T>(int x, Func<int, T> foo)
+        {
+            T[] table = new T[x];
+
+            for (int i = 0; i < x; i++)
+                table[i] = foo(i);
+
+            return table;
         }
 
         //TODO repair display
         static void printTable<T>(T[] table, Func<T, bool> foo)
         {
+            bool first = true;
+
             Console.Write("[");
             for (int i = 0; i < table.Length;i++)
             {
                 if (foo(table[i]))
                 {
-                    if (i != 0)
-                        Console.Write(" , ");
+                    if (!first)
+                        Console.Write("|");
                     Console.Write(table[i]);
+                    first = false;
                 }
             }
             Console.Write("]");
@@ -366,9 +419,42 @@ namespace WSEI_Wprowadzenie_do_programowania
                     Console.Write(i + " ");
         }
 
+        static void zad862()
+        {
+            int[] tab = fibonacciSequence(35);
+            printTable(tab);
+        }
+
+        static void zad863()
+        {
+            int[] tab = { 2, 7, 4, 9, 3, 5, -3, -123, -124326, 345, 123, 123, 123, 11111, 342, 324, 5, 5, 4, 4, 1, -1, 1, -1, 0, 5, 2, 2, 2, 444, -444, 4 };
+            printTable(sortTableMin(tab));
+        }
+
+        static void zad864()
+        {
+            int n = Convert.ToInt32(Console.ReadLine());
+            int[] tabA = generateTable(n, x => x);
+            int[] tabB = generateTable(n, x => x = x + 7);
+            int[] tabC = generateTable(n, x => x = 4 * (x + 1));
+            int[] tabD = generateTable(n, x => x = Convert.ToInt32(Math.Pow(2,x)));
+            int[] tabE = generateTable(n, x => x = 2 + x);
+
+            Console.Write("a) ");
+            printTable(tabA);
+            Console.Write("b) ");
+            printTable(tabB);
+            Console.Write("c) ");
+            printTable(tabC);
+            Console.Write("d) ");
+            printTable(tabD);
+            Console.Write("e) ");
+            printTable(tabE);
+        }
+
         static void Main(string[] args)
         {
-            zad861();
+            zad843();
         }
     }
 }
