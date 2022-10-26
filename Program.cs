@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace WSEI_Wprowadzenie_do_programowania
 {
@@ -138,6 +139,14 @@ namespace WSEI_Wprowadzenie_do_programowania
                         swap = true;
                     }
             }
+            return tab;
+        }
+
+        static T[] functionTable<T>(T[] tab, Func<T, T> foo, Func<T, bool> fbool)
+        {
+            for (int i = 0; i < tab.Length; i++)
+                if (fbool(tab[i]))
+                    tab[i] = foo(tab[i]);
             return tab;
         }
 
@@ -288,9 +297,78 @@ namespace WSEI_Wprowadzenie_do_programowania
             }
         }
 
+        static void zad846()
+        {
+            int[] tab = enterNumbers();
+            for (int i = 0; i < tab.Length; i++)
+            {
+                int value = tab[i];
+                int sum = 0;
+                while (value != 0)
+                {
+                    sum = sum + (value % 10);
+                    value /= 10;
+                }
+                if (sum == 1)
+                    Console.WriteLine(tab[i]);
+            }
+        }
+
+        static void zad847()
+        {
+            int[] tab = enterNumbers();
+            int[] result = functionTable(tab, x => x += 100, x => x % 2 == 0);
+            printTable(result);
+        }
+
+        static void zad848()
+        {
+            double[] tab = enterDoubleNumbers();
+            tab = functionTable(tab, x => x = 0, x => x < 0);
+            printTable(tab);
+        }
+
+        static void zad851()
+        {
+            double[] tab = enterDoubleNumbers();
+            for (int i = 0; i < tab.Length; i += 2)
+                Console.WriteLine(tab[i]);
+        }
+
+        static void zad852()
+        {
+            double[] tab = enterDoubleNumbers();
+            for (int i = 1; i < tab.Length; i++)
+            {
+                if (i * i < tab.Length)
+                    Console.WriteLine(tab[i * i]);
+                else
+                    break;
+            }
+        }
+
+        static void zad861()
+        {
+            int n = Convert.ToInt32(Console.ReadLine());
+
+            int[] tab = new int[n];
+
+            for (int i = 0; i < n; i++)
+                tab[i] = 0;
+
+            for (int i = 2; i * i <= n; i++)
+                if (tab[i] == 0)
+                    for (int j = i * i; j < n; j += i)
+                        tab[j] = 1;
+
+            for (int i = 2; i < n; i++)
+                if (tab[i] == 0)
+                    Console.Write(i + " ");
+        }
+
         static void Main(string[] args)
         {
-            zad845();
+            zad861();
         }
     }
 }
