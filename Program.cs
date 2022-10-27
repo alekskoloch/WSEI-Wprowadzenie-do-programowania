@@ -1,38 +1,82 @@
 ﻿using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 
 namespace WSEI_Wprowadzenie_do_programowania
 {
     internal class Program
     {
-        static int[] enterNumbers()
+        /* enter data */
+        static T[] enterData<T>()
         {
-            Console.Write("How many numbers do you want to enter: ");
+            Console.Write("How many elements do you want to enter? ");
             int n = Convert.ToInt32(Console.ReadLine());
-            int[] tab = new int[n];
-
+            T[] tab = new T[n];
             for (int i = 0; i < n; i++)
             {
-                Console.Write("Enter " + " number: ");
-                tab[i] = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Enter " + (i + 1) + " number: ");
+                tab[i] = (T)Convert.ChangeType(Console.ReadLine(), typeof(T))!;
             }
 
             return tab;
         }
 
-        static double[] enterDoubleNumbers()
+        static T[] enterData<T>(int count)
         {
-            Console.Write("How many numbers do you want to enter: ");
-            int n = Convert.ToInt32(Console.ReadLine());
-            double[] tab = new double[n];
-
-            for (int i = 0; i < n; i++)
+            count = (count > 0) ? count : 0;
+            T[] tab = new T[count];
+            for (int i = 0; i < count; i++)
             {
-                Console.Write("Enter " + " number: ");
-                tab[i] = Convert.ToDouble(Console.ReadLine());
+                Console.Write("Enter " + (i + 1) + " number: ");
+                tab[i] = (T)Convert.ChangeType(Console.ReadLine(), typeof(T))!;
             }
-
             return tab;
+        }
+
+        static void enterData<T>(T[] tab)
+        {
+            for (int i = 0; i < tab.Length; i++)
+            {
+                Console.Write("Enter " + (i + 1) + " element: ");
+                tab[i] = (T)Convert.ChangeType(Console.ReadLine(), typeof(T))!;
+            }
+        }
+
+        /* generate data */
+        static T[] generateTable<T>(int x, Func<T, T> foo)
+        {
+            T[] table = new T[x];
+
+            for (int i = 0; i < x; i++)
+                table[i] = foo((T)Convert.ChangeType(i, typeof(T)));
+
+            return table;
+        }
+
+        /* function */
+        static T[] functionTable<T>(T[] tab, Func<T, T> foo, Func<T, bool> fbool)
+        {
+            for (int i = 0; i < tab.Length; i++)
+                if (fbool(tab[i]))
+                    tab[i] = foo(tab[i]);
+            return tab;
+        }
+
+        /* algorithms */
+        static T find<T>(T[] tab, Func<T, T, bool> foo)
+        {
+            T result = tab[0];
+            for (int i = 0; i < tab.Length; i++)
+                if (foo(result, tab[i]))
+                    result = tab[i];
+            return result;
+        }
+
+        static int count<T>(T[] tab, Func<T, bool> foo)
+        {
+            int counter = 0;
+            for (int i = 0; i < tab.Length; i++)
+                if (foo(tab[i]))
+                    counter++;
+            return counter;
         }
 
         static int findMax(int[] tab)
@@ -163,14 +207,6 @@ namespace WSEI_Wprowadzenie_do_programowania
             return result;
         }
 
-        static T[] functionTable<T>(T[] tab, Func<T, T> foo, Func<T, bool> fbool)
-        {
-            for (int i = 0; i < tab.Length; i++)
-                if (fbool(tab[i]))
-                    tab[i] = foo(tab[i]);
-            return tab;
-        }
-
         static void printTable<T>(T[] table)
         {
             Console.Write("[");
@@ -202,17 +238,6 @@ namespace WSEI_Wprowadzenie_do_programowania
             return result;
         }
 
-        static T[] generateTable<T>(int x, Func<int, T> foo)
-        {
-            T[] table = new T[x];
-
-            for (int i = 0; i < x; i++)
-                table[i] = foo(i);
-
-            return table;
-        }
-
-        //TODO repair display
         static void printTable<T>(T[] table, Func<T, bool> foo)
         {
             bool first = true;
@@ -234,107 +259,107 @@ namespace WSEI_Wprowadzenie_do_programowania
         // TASKS
         static void zad821()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             Console.WriteLine(findMax(tab));
         }
-
+        
         static void zad822()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             Console.WriteLine(findMin(tab));
         }
 
         static void zad823()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             Console.WriteLine(count(tab, findMax(tab)));
         }
 
         static void zad824()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             Console.WriteLine(count(tab, findMin(tab)));
         }
 
         static void zad825()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             Console.WriteLine(findMax(tab, 2));
         }
 
         static void zad826()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             Console.WriteLine(findMin(tab, 2));
         }
 
         static void zad827()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             Console.WriteLine(count(tab, findMax(tab, 2)));
         }
 
         static void zad828()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             Console.WriteLine(count(tab, findMin(tab, 2)));
         }
 
         static void zad831()
         {
-            double[] tab = enterDoubleNumbers();
+            double[] tab = enterData<double>();
             pow(tab, 2);
             printTable(tab);
         }
 
         static void zad832()
         {
-            double[] tab = enterDoubleNumbers();
+            double[] tab = enterData<double>();
             pow(tab, 3);
             printTable(tab);
         }
 
         static void zad833()
         {
-            double[] tab = enterDoubleNumbers();
+            double[] tab = enterData<double>();
             addForEach(tab, 1);
             printTable(tab); 
         }
 
         static void zad834()
         {
-            double[] tab = enterDoubleNumbers();
+            double[] tab = enterData<double>();
             multiplyForEach(tab, 2);
             printTable(tab);
         }
 
         static void zad841()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             printTable(tab, x => x % 2 == 0);
         }
 
         static void zad842()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             printTable(tab, x => x % 2 != 0);
         }
 
         static void zad843()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             printTable(tab, x => x % 3 == 0);
         }
 
         static void zad844()
         {
-            double[] tab = enterDoubleNumbers();
+            double[] tab = enterData<double>();
             printTable(tab, x => x >= 4 && x < 15);
         }
 
         static void zad845()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             for (int i = 0; i < tab.Length; i++)
             {
                 int value = tab[i];
@@ -352,7 +377,7 @@ namespace WSEI_Wprowadzenie_do_programowania
 
         static void zad846()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             for (int i = 0; i < tab.Length; i++)
             {
                 int value = tab[i];
@@ -369,28 +394,28 @@ namespace WSEI_Wprowadzenie_do_programowania
 
         static void zad847()
         {
-            int[] tab = enterNumbers();
+            int[] tab = enterData<int>();
             int[] result = functionTable(tab, x => x += 100, x => x % 2 == 0);
             printTable(result);
         }
 
         static void zad848()
         {
-            double[] tab = enterDoubleNumbers();
+            double[] tab = enterData<double>();
             tab = functionTable(tab, x => x = 0, x => x < 0);
             printTable(tab);
         }
 
         static void zad851()
         {
-            double[] tab = enterDoubleNumbers();
+            double[] tab = enterData<double>();
             for (int i = 0; i < tab.Length; i += 2)
                 Console.WriteLine(tab[i]);
         }
 
         static void zad852()
         {
-            double[] tab = enterDoubleNumbers();
+            double[] tab = enterData<double>();
             for (int i = 1; i < tab.Length; i++)
             {
                 if (i * i < tab.Length)
@@ -434,11 +459,11 @@ namespace WSEI_Wprowadzenie_do_programowania
         static void zad864()
         {
             int n = Convert.ToInt32(Console.ReadLine());
-            int[] tabA = generateTable(n, x => x);
-            int[] tabB = generateTable(n, x => x = x + 7);
-            int[] tabC = generateTable(n, x => x = 4 * (x + 1));
-            int[] tabD = generateTable(n, x => x = Convert.ToInt32(Math.Pow(2,x)));
-            int[] tabE = generateTable(n, x => x = 2 + x);
+            int[] tabA = generateTable<int>(n, x => x);
+            int[] tabB = generateTable<int>(n, x => x = x + 7);
+            int[] tabC = generateTable<int>(n, x => x = 4 * (x + 1));
+            int[] tabD = generateTable<int>(n, x => x = Convert.ToInt32(Math.Pow(2,x)));
+            int[] tabE = generateTable<int>(n, x => x = 2 + x);
 
             Console.Write("a) ");
             printTable(tabA);
@@ -454,7 +479,10 @@ namespace WSEI_Wprowadzenie_do_programowania
 
         static void Main(string[] args)
         {
-            zad843();
+            int[] tab = { 2, 5, 3, 3, 2, 341, 3, 345, 3, 21, 1, 45, -1234, -231, -12341, -23, 21 };
+            printTable(tab);
+            Console.WriteLine(find(tab, (x, y) => x < y));
+            Console.WriteLine(count(tab, x => x > 300));
         }
     }
 }
