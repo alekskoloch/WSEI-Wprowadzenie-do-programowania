@@ -4,6 +4,7 @@ namespace WSEI_Wprowadzenie_do_programowania
 {
     internal class Program
     {
+
         /* enter data */
         static T[] enterData<T>()
         {
@@ -51,15 +52,6 @@ namespace WSEI_Wprowadzenie_do_programowania
             return table;
         }
 
-        /* function */
-        static T[] functionTable<T>(T[] tab, Func<T, T> foo, Func<T, bool> fbool)
-        {
-            for (int i = 0; i < tab.Length; i++)
-                if (fbool(tab[i]))
-                    tab[i] = foo(tab[i]);
-            return tab;
-        }
-
         /* algorithms */
         static T find<T>(T[] tab, Func<T, T, bool> foo)
         {
@@ -79,99 +71,27 @@ namespace WSEI_Wprowadzenie_do_programowania
             return counter;
         }
 
-        static int findMax(int[] tab)
+        static T[] order<T>(T[] tab, Func<T, T> foo, Func<T, bool> fbool)
         {
-            int result = tab[0];
-            for (int i = 1; i < tab.Length; i++)
-                if (result < tab[i])
-                    result = tab[i];
-            return result;
-        }
-
-        static int findMax(int[] tab, int which)
-        {
-            which--;
-            int without = findMax(tab);
-            int result = findMax(tab);
-            for (int x = 0; x <= which; x++)
-            {
-                result = findMin(tab);
-                for (int i = 0; i < tab.Length; i++)
-                    if (result < tab[i] && tab[i] < without)
-                        result = tab[i];
-                which -= 1;
-                without = result;
-            }
-            return result;
-        }
-
-        static int findMin(int[] tab)
-        {
-            int result = tab[0];
-            for (int i = 1; i < tab.Length; i++)
-                if (result > tab[i])
-                    result = tab[i];
-            return result;
-        }
-
-        static int findMin(int[] tab, int which)
-        {
-            which--;
-            int without = findMin(tab);
-            int result = findMin(tab);
-            for (int x = 0; x <= which; x++)
-            {
-                result = findMax(tab);
-                for (int i = 0; i < tab.Length; i++)
-                    if (result > tab[i] && tab[i] > without)
-                        result = tab[i];
-                which -= 1;
-                without = result;
-            }
-            return result;
-        }
-
-        static int count(int[] tab, int x)
-        {
-            int result = 0;
-            foreach (int i in tab)
-                if (i == x)
-                    result++;
-
-            return result;
-        }
-
-        static double[] pow(double[] tab, int p)
-        {
-            p--;
             for (int i = 0; i < tab.Length; i++)
-            {
-                double value = tab[i];
-                for (int x = 0; x < p; x++)
-                    tab[i] *= value;
-            }
+                if (fbool(tab[i]))
+                    tab[i] = foo(tab[i]);
             return tab;
         }
 
-        static double[] addForEach(double[] tab, double add)
+        static T[] order<T>(T[] tab, Func<T, T> foo)
         {
             for (int i = 0; i < tab.Length; i++)
-                tab[i] += add;
+                tab[i] = foo(tab[i]);
             return tab;
         }
 
-        static double[] multiplyForEach(double[] tab, double multiply)
-        {
-            for (int i = 0; i < tab.Length; i++)
-                tab[i] *= multiply;
-            return tab;
-        }
-
-        static int[] sortTable(int[] tab)
+        /* sorting algorithms */
+        static void sortTable(int[] tab)
         {
             int temp = tab[0];
-            bool swap = true;
-            while (swap)
+            bool swap = false;
+            do
             {
                 swap = false;
                 for (int i = 1; i < tab.Length; i++)
@@ -182,14 +102,11 @@ namespace WSEI_Wprowadzenie_do_programowania
                         tab[i - 1] = temp;
                         swap = true;
                     }
-            }
-            return tab;
+            } while (swap);
         }
 
-        static int[] sortTableMin(int[] tab)
-        {
-            int[] result = tab;
-            
+        static void sortTableMin(int[] result)
+        { 
             for (int i = 0; i < result.Length; i++)
             {
                 int minPos = i;
@@ -203,28 +120,14 @@ namespace WSEI_Wprowadzenie_do_programowania
                     result[minPos] = temp;
                 }
             }
-
-            return result;
         }
 
-        static void printTable<T>(T[] table)
-        {
-            Console.Write("[");
-            for (int i = 0; i < table.Length;)
-            {
-                Console.Write(table[i++]);
-                if (i != table.Length)
-                    Console.Write("|");
-            }
-            Console.Write("]");
-            Console.WriteLine();
-        }
-
+        /* other algorithms */
         static int fibonacci(int x)
         {
-            if (x <= 0)
+            if (x <= 1)
                 return 0;
-            else if (x == 1)
+            else if (x == 2)
                 return 1;
             else
                 return fibonacci(x - 1) + fibonacci(x - 2);
@@ -232,12 +135,23 @@ namespace WSEI_Wprowadzenie_do_programowania
 
         static int[] fibonacciSequence(int x)
         {
+            
+            x = x < 0 ? 0 : x;
             int[] result = new int[x];
-            for (int i = 0; i < x; i++)
-                result[i] = fibonacci(i);
+            result[0] = 0;
+            if (x >= 1)
+                result[1] = 1;
+
+            if (x >= 2)
+                result[2] = 1;
+
+            if (x >= 3)
+                for (int i = 3; i < x; i++)
+                    result[i] = result[i - 1] + result[i - 2];
             return result;
         }
 
+        /* display tables */
         static void printTable<T>(T[] table, Func<T, bool> foo)
         {
             bool first = true;
@@ -256,80 +170,93 @@ namespace WSEI_Wprowadzenie_do_programowania
             Console.Write("]");
         }
 
+        static void printTable<T>(T[] table)
+        {
+            Console.Write("[");
+            for (int i = 0; i < table.Length;)
+            {
+                Console.Write(table[i++]);
+                if (i != table.Length)
+                    Console.Write("|");
+            }
+            Console.Write("]");
+            Console.WriteLine();
+        }
+
         // TASKS
         static void zad821()
         {
             int[] tab = enterData<int>();
-            Console.WriteLine(findMax(tab));
+            Console.WriteLine(find(tab, (x, y) => x < y));
         }
         
         static void zad822()
         {
             int[] tab = enterData<int>();
-            Console.WriteLine(findMin(tab));
+            Console.WriteLine(find(tab, (x, y) => x > y));
         }
 
         static void zad823()
         {
             int[] tab = enterData<int>();
-            Console.WriteLine(count(tab, findMax(tab)));
+            Console.WriteLine(count(tab, x => x == find(tab, (x, y) => x < y)));
         }
 
         static void zad824()
         {
             int[] tab = enterData<int>();
-            Console.WriteLine(count(tab, findMin(tab)));
+            Console.WriteLine(count(tab, x => x == find(tab, (x, y) => x > y)));
         }
 
         static void zad825()
         {
             int[] tab = enterData<int>();
-            Console.WriteLine(findMax(tab, 2));
+            Console.WriteLine(find(tab, (x, y) => x < y && y != find(tab, (x, y) => x < y)));
         }
 
         static void zad826()
         {
             int[] tab = enterData<int>();
-            Console.WriteLine(findMin(tab, 2));
+            Console.WriteLine(find(tab, (x, y) => x > y && y != find(tab, (x, y) => x > y)));
         }
 
         static void zad827()
         {
             int[] tab = enterData<int>();
-            Console.WriteLine(count(tab, findMax(tab, 2)));
+            Console.WriteLine(count(tab, x => x == find(tab, (x, y) => x < y && y != find(tab, (x, y) => x < y))));
         }
 
         static void zad828()
         {
             int[] tab = enterData<int>();
-            Console.WriteLine(count(tab, findMin(tab, 2)));
-        }
+            Console.WriteLine(count(tab, x => x == find(tab, (x, y) => x > y && y != find(tab, (x, y) => x > y))));
+        } 
 
         static void zad831()
         {
             double[] tab = enterData<double>();
-            pow(tab, 2);
+            order(tab, x => x = x * x);
             printTable(tab);
         }
 
         static void zad832()
         {
             double[] tab = enterData<double>();
-            pow(tab, 3);
+            order(tab, x => x * x * x);
             printTable(tab);
         }
 
         static void zad833()
         {
             double[] tab = enterData<double>();
-            addForEach(tab, 1);
+            order(tab, x => x += 1);
             printTable(tab); 
         }
 
         static void zad834()
         {
             double[] tab = enterData<double>();
-            multiplyForEach(tab, 2);
+            order(tab, x => x *= 2);
             printTable(tab);
         }
 
@@ -395,14 +322,14 @@ namespace WSEI_Wprowadzenie_do_programowania
         static void zad847()
         {
             int[] tab = enterData<int>();
-            int[] result = functionTable(tab, x => x += 100, x => x % 2 == 0);
+            int[] result = order(tab, x => x += 100, x => x % 2 == 0);
             printTable(result);
         }
 
         static void zad848()
         {
             double[] tab = enterData<double>();
-            tab = functionTable(tab, x => x = 0, x => x < 0);
+            tab = order(tab, x => x = 0, x => x < 0);
             printTable(tab);
         }
 
@@ -453,7 +380,8 @@ namespace WSEI_Wprowadzenie_do_programowania
         static void zad863()
         {
             int[] tab = { 2, 7, 4, 9, 3, 5, -3, -123, -124326, 345, 123, 123, 123, 11111, 342, 324, 5, 5, 4, 4, 1, -1, 1, -1, 0, 5, 2, 2, 2, 444, -444, 4 };
-            printTable(sortTableMin(tab));
+            sortTableMin(tab);
+            printTable(tab);
         }
 
         static void zad864()
@@ -465,6 +393,9 @@ namespace WSEI_Wprowadzenie_do_programowania
             int[] tabD = generateTable<int>(n, x => x = Convert.ToInt32(Math.Pow(2,x)));
             int[] tabE = generateTable<int>(n, x => x = 2 + x);
 
+            //fibonacci test
+            double[] tabF = generateTable<double>(n, x => x == 0 ? 0 : x =Math.Round((1 / Math.Sqrt(5)) * (Math.Pow(((1 + Math.Sqrt(5)) / 2), x)) - (Math.Pow(((1 - Math.Sqrt(5)) / 2), x))));
+
             Console.Write("a) ");
             printTable(tabA);
             Console.Write("b) ");
@@ -475,14 +406,13 @@ namespace WSEI_Wprowadzenie_do_programowania
             printTable(tabD);
             Console.Write("e) ");
             printTable(tabE);
+            Console.Write("f) ");
+            printTable(tabF);
         }
 
         static void Main(string[] args)
         {
-            int[] tab = { 2, 5, 3, 3, 2, 341, 3, 345, 3, 21, 1, 45, -1234, -231, -12341, -23, 21 };
-            printTable(tab);
-            Console.WriteLine(find(tab, (x, y) => x < y));
-            Console.WriteLine(count(tab, x => x > 300));
+            zad864();
         }
     }
 }
