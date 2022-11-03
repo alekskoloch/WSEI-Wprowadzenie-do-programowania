@@ -1,10 +1,13 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Reflection.PortableExecutable;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace WSEI_Wprowadzenie_do_programowania
 {
     internal class Program
     {
-
         /* enter data */
         static T[] enterData<T>()
         {
@@ -39,6 +42,17 @@ namespace WSEI_Wprowadzenie_do_programowania
                 Console.Write("Enter " + (i + 1) + " element: ");
                 tab[i] = (T)Convert.ChangeType(Console.ReadLine(), typeof(T))!;
             }
+        }
+
+        static T[] enterDataLine<T>()
+        {
+            string[] subs = Console.ReadLine()!.Split(' ');
+            T[] tab = new T[subs.Length];
+
+            for (int i = 0; i < subs.Length; i++)
+                tab[i] = (T)Convert.ChangeType(subs[i], typeof(T))!;
+
+            return tab;
         }
 
         /* generate data */
@@ -96,6 +110,24 @@ namespace WSEI_Wprowadzenie_do_programowania
                 swap = false;
                 for (int i = 1; i < tab.Length; i++)
                     if (tab[i - 1] > tab[i])
+                    {
+                        temp = tab[i];
+                        tab[i] = tab[i - 1];
+                        tab[i - 1] = temp;
+                        swap = true;
+                    }
+            } while (swap);
+        }
+
+        static void sortTable(int[] tab, int start, int end)
+        {
+            int temp = tab[0];
+            bool swap = false;
+            do
+            {
+                swap = false;
+                for (int i = start + 1; i < end + 1; i++)
+                    if (tab[i - 1] < tab[i])
                     {
                         temp = tab[i];
                         tab[i] = tab[i - 1];
@@ -412,7 +444,7 @@ namespace WSEI_Wprowadzenie_do_programowania
 
         static void Main(string[] args)
         {
-            zad864();
+            printTable(generateTable<int>(100, x => x += 1), x => x % 5 == 0 && x <= 50);
         }
     }
 }
