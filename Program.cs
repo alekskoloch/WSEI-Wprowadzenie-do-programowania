@@ -66,7 +66,7 @@ namespace WSEI_Wprowadzenie_do_programowania
             return table;
         }
 
-        /* algorithms */
+        /* table algorithms */
         static T find<T>(T[] tab, Func<T, T, bool> foo)
         {
             T result = tab[0];
@@ -97,6 +97,18 @@ namespace WSEI_Wprowadzenie_do_programowania
         {
             for (int i = 0; i < tab.Length; i++)
                 tab[i] = foo(tab[i]);
+            return tab;
+        }
+
+        static T[] reverseTable<T>(T[] tab)
+        {
+            T temp;
+            for (int i = 0; i < tab.Length / 2; i++)
+            {
+                temp = tab[i];
+                tab[i] = tab[tab.Length - (i + 1)];
+                tab[tab.Length - (i + 1)] = temp;
+            }
             return tab;
         }
 
@@ -213,6 +225,116 @@ namespace WSEI_Wprowadzenie_do_programowania
             }
             Console.Write("]");
             Console.WriteLine();
+        }
+
+        /* int algorithms */
+        static bool isPow(int x, int pow)
+        {
+            while (x != 1)
+            {
+                if (x % pow == 0)
+                    x /= pow;
+                else
+                    return false;
+            }
+            return true;
+        }
+
+        /* simple programs */
+        static void guessGame()
+        {
+            Console.Write("Range? From 0 to: ");
+            Random random = new Random();
+            int x = random.Next(Convert.ToInt32(Console.ReadLine()) + 1);
+            int result = x + 1;
+
+            int counter = 0;
+
+            while (x != result)
+            {
+                Console.Write("Now guess the number... ");
+                result = Convert.ToInt32(Console.ReadLine());
+
+                if (result > x)
+                    Console.WriteLine("Too big!");
+                else if (result < x)
+                    Console.WriteLine("Too small!");
+
+                counter++;
+            }
+
+            Console.WriteLine("Nice! You guess the number for the " + counter + " time!");
+        }
+
+        static void calculator()
+        {
+            bool work = true;
+
+            while (work)
+            {
+                int x = 0;
+                int y = 0;
+                char ch = '0';
+                Console.WriteLine("1. Addition (+)");
+                Console.WriteLine("2. Subtraction (-)");
+                Console.WriteLine("3. Multiplication (*)");
+                Console.WriteLine("4. Division (/)");
+                Console.WriteLine("5. The rest (%)");
+                Console.WriteLine("0. Exit");
+
+                ch = Convert.ToChar(Console.ReadLine()!);
+                
+                if (ch >= '1' && ch <= '5')
+                {
+                    Console.WriteLine("---------------------------");
+
+                    Console.Write("Enter 1 number: ");
+                    x = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Enter 2 number: ");
+                    y = Convert.ToInt32(Console.ReadLine());
+                }
+
+
+                switch (ch)
+                {
+                    case '1':
+                        {
+                            Console.WriteLine("Addition: " + (x + y));
+                            break;
+                        }
+                    case '2':
+                        {
+                            Console.WriteLine("Subtraction: " + (x - y));
+                            break;
+                        }
+                    case '3':
+                        {
+                            Console.WriteLine("Multiplication: " + (x * y));
+                            break;
+                        }
+                    case '4':
+                        {
+                            Console.WriteLine("Division: " + (x / y));
+                            break;
+                        }
+                    case '5':
+                        {
+                            Console.WriteLine("The rest: " + (x % y));
+                            break;
+                        }
+                    case '0':
+                        {
+                            work = false;
+                            break;
+                        }
+                    default:
+                        {
+                            Console.WriteLine("ERROR");
+                            break;
+                        }
+                }
+                Console.WriteLine("---------------------------");
+            }
         }
 
         // TASKS
@@ -444,7 +566,7 @@ namespace WSEI_Wprowadzenie_do_programowania
 
         static void Main(string[] args)
         {
-            printTable(generateTable<int>(100, x => x += 1), x => x % 5 == 0 && x <= 50);
+            calculator();
         }
     }
 }
