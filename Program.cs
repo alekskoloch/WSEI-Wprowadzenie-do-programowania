@@ -240,6 +240,17 @@ namespace WSEI_Wprowadzenie_do_programowania
             return true;
         }
 
+        static double toDecimal(double x, int numeralSystem)
+        {
+            string number = Convert.ToString(x);
+            double result = 0;
+
+            for (int i = 0; i < number.Length; i++)
+                result += (Convert.ToInt32(number[i].ToString())) * Math.Pow(numeralSystem, number.Length - (i + 1));
+
+            return result;
+        }
+
         /* simple programs */
         static void guessGame()
         {
@@ -274,7 +285,7 @@ namespace WSEI_Wprowadzenie_do_programowania
             {
                 int x = 0;
                 int y = 0;
-                char ch = '0';
+                string ch = "0";
                 Console.WriteLine("1. Addition (+)");
                 Console.WriteLine("2. Subtraction (-)");
                 Console.WriteLine("3. Multiplication (*)");
@@ -282,11 +293,11 @@ namespace WSEI_Wprowadzenie_do_programowania
                 Console.WriteLine("5. The rest (%)");
                 Console.WriteLine("0. Exit");
 
-                ch = Convert.ToChar(Console.ReadLine()!);
+                ch = Console.ReadLine()!;
                 
-                if (ch >= '1' && ch <= '5')
+                if (ch == "1" || ch == "2" || ch == "3" || ch == "4" || ch == "5")
                 {
-                    Console.WriteLine("---------------------------");
+                    Console.WriteLine("------------------------------");
 
                     Console.Write("Enter 1 number: ");
                     x = Convert.ToInt32(Console.ReadLine());
@@ -297,32 +308,32 @@ namespace WSEI_Wprowadzenie_do_programowania
 
                 switch (ch)
                 {
-                    case '1':
+                    case "1":
                         {
                             Console.WriteLine("Addition: " + (x + y));
                             break;
                         }
-                    case '2':
+                    case "2":
                         {
                             Console.WriteLine("Subtraction: " + (x - y));
                             break;
                         }
-                    case '3':
+                    case "3":
                         {
                             Console.WriteLine("Multiplication: " + (x * y));
                             break;
                         }
-                    case '4':
+                    case "4":
                         {
                             Console.WriteLine("Division: " + (x / y));
                             break;
                         }
-                    case '5':
+                    case "5":
                         {
                             Console.WriteLine("The rest: " + (x % y));
                             break;
                         }
-                    case '0':
+                    case "0":
                         {
                             work = false;
                             break;
@@ -333,7 +344,9 @@ namespace WSEI_Wprowadzenie_do_programowania
                             break;
                         }
                 }
-                Console.WriteLine("---------------------------");
+                Console.WriteLine("Press ENTER");
+                Console.ReadLine();
+                Console.Clear();
             }
         }
 
@@ -566,7 +579,14 @@ namespace WSEI_Wprowadzenie_do_programowania
 
         static void Main(string[] args)
         {
-            calculator();
+            int[] tab = { 1, 2, 3, 4, 5 };
+
+            if (tab[0] == tab[tab.Length - 1])
+                Console.WriteLine("TRUE");
+            else
+            {
+                Console.WriteLine("FALSE");
+            }
         }
     }
 }
