@@ -1,11 +1,14 @@
 ﻿using System.Diagnostics;
 using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace WSEI_Wprowadzenie_do_programowania
 {
+    
+
     internal class Program
     {
         /* enter data */
@@ -350,243 +353,241 @@ namespace WSEI_Wprowadzenie_do_programowania
             }
         }
 
-        // TASKS
-        static void zad821()
+        /* ZADANIA */
+        public class Zadania
         {
-            int[] tab = enterData<int>();
-            Console.WriteLine(find(tab, (x, y) => x < y));
-        }
-        
-        static void zad822()
-        {
-            int[] tab = enterData<int>();
-            Console.WriteLine(find(tab, (x, y) => x > y));
-        }
 
-        static void zad823()
-        {
-            int[] tab = enterData<int>();
-            Console.WriteLine(count(tab, x => x == find(tab, (x, y) => x < y)));
-        }
-
-        static void zad824()
-        {
-            int[] tab = enterData<int>();
-            Console.WriteLine(count(tab, x => x == find(tab, (x, y) => x > y)));
-        }
-
-        static void zad825()
-        {
-            int[] tab = enterData<int>();
-            Console.WriteLine(find(tab, (x, y) => x < y && y != find(tab, (x, y) => x < y)));
-        }
-
-        static void zad826()
-        {
-            int[] tab = enterData<int>();
-            Console.WriteLine(find(tab, (x, y) => x > y && y != find(tab, (x, y) => x > y)));
-        }
-
-        static void zad827()
-        {
-            int[] tab = enterData<int>();
-            Console.WriteLine(count(tab, x => x == find(tab, (x, y) => x < y && y != find(tab, (x, y) => x < y))));
-        }
-
-        static void zad828()
-        {
-            int[] tab = enterData<int>();
-            Console.WriteLine(count(tab, x => x == find(tab, (x, y) => x > y && y != find(tab, (x, y) => x > y))));
-        } 
-
-        static void zad831()
-        {
-            double[] tab = enterData<double>();
-            order(tab, x => x = x * x);
-            printTable(tab);
-        }
-
-        static void zad832()
-        {
-            double[] tab = enterData<double>();
-            order(tab, x => x * x * x);
-            printTable(tab);
-        }
-
-        static void zad833()
-        {
-            double[] tab = enterData<double>();
-            order(tab, x => x += 1);
-            printTable(tab); 
-        }
-
-        static void zad834()
-        {
-            double[] tab = enterData<double>();
-            order(tab, x => x *= 2);
-            printTable(tab);
-        }
-
-        static void zad841()
-        {
-            int[] tab = enterData<int>();
-            printTable(tab, x => x % 2 == 0);
-        }
-
-        static void zad842()
-        {
-            int[] tab = enterData<int>();
-            printTable(tab, x => x % 2 != 0);
-        }
-
-        static void zad843()
-        {
-            int[] tab = enterData<int>();
-            printTable(tab, x => x % 3 == 0);
-        }
-
-        static void zad844()
-        {
-            double[] tab = enterData<double>();
-            printTable(tab, x => x >= 4 && x < 15);
-        }
-
-        static void zad845()
-        {
-            int[] tab = enterData<int>();
-            for (int i = 0; i < tab.Length; i++)
+            // TASKS
+            public static void zad821()
             {
-                int value = tab[i];
-                while (value != 0)
+                int[] tab = enterData<int>();
+                Console.WriteLine(find(tab, (x, y) => x < y));
+            }
+
+            public static void zad822()
+            {
+                int[] tab = enterData<int>();
+                Console.WriteLine(find(tab, (x, y) => x > y));
+            }
+
+            public static void zad823()
+            {
+                int[] tab = enterData<int>();
+                Console.WriteLine(count(tab, x => x == find(tab, (x, y) => x < y)));
+            }
+
+            public static void zad824()
+            {
+                int[] tab = enterData<int>();
+                Console.WriteLine(count(tab, x => x == find(tab, (x, y) => x > y)));
+            }
+
+            public static void zad825()
+            {
+                int[] tab = enterData<int>();
+                Console.WriteLine(find(tab, (x, y) => x < y && y != find(tab, (x, y) => x < y)));
+            }
+
+            public static void zad826()
+            {
+                int[] tab = enterData<int>();
+                Console.WriteLine(find(tab, (x, y) => x > y && y != find(tab, (x, y) => x > y)));
+            }
+
+            public static void zad827()
+            {
+                int[] tab = enterData<int>();
+                Console.WriteLine(count(tab, x => x == find(tab, (x, y) => x < y && y != find(tab, (x, y) => x < y))));
+            }
+
+            public static void zad828()
+            {
+                int[] tab = enterData<int>();
+                Console.WriteLine(count(tab, x => x == find(tab, (x, y) => x > y && y != find(tab, (x, y) => x > y))));
+            }
+
+            public static void zad831()
+            {
+                double[] tab = enterData<double>();
+                order(tab, x => x = x * x);
+                printTable(tab);
+            }
+
+            public static void zad832()
+            {
+                double[] tab = enterData<double>();
+                order(tab, x => x * x * x);
+                printTable(tab);
+            }
+
+            public static void zad833()
+            {
+                double[] tab = enterData<double>();
+                order(tab, x => x += 1);
+                printTable(tab);
+            }
+
+            public static void zad834()
+            {
+                double[] tab = enterData<double>();
+                order(tab, x => x *= 2);
+                printTable(tab);
+            }
+
+            public static void zad841()
+            {
+                int[] tab = enterData<int>();
+                printTable(tab, x => x % 2 == 0);
+            }
+
+            public static void zad842()
+            {
+                int[] tab = enterData<int>();
+                printTable(tab, x => x % 2 != 0);
+            }
+
+            public static void zad843()
+            {
+                int[] tab = enterData<int>();
+                printTable(tab, x => x % 3 == 0);
+            }
+
+            public static void zad844()
+            {
+                double[] tab = enterData<double>();
+                printTable(tab, x => x >= 4 && x < 15);
+            }
+
+            public static void zad845()
+            {
+                int[] tab = enterData<int>();
+                for (int i = 0; i < tab.Length; i++)
                 {
-                    if (value % 2 == 0)
+                    int value = tab[i];
+                    while (value != 0)
+                    {
+                        if (value % 2 == 0)
+                            value /= 10;
+                        else
+                            break;
+                    }
+                    if (value == 0)
+                        Console.WriteLine(tab[i]);
+                }
+            }
+
+            public static void zad846()
+            {
+                int[] tab = enterData<int>();
+                for (int i = 0; i < tab.Length; i++)
+                {
+                    int value = tab[i];
+                    int sum = 0;
+                    while (value != 0)
+                    {
+                        sum = sum + (value % 10);
                         value /= 10;
+                    }
+                    if (sum == 1)
+                        Console.WriteLine(tab[i]);
+                }
+            }
+
+            public static void zad847()
+            {
+                int[] tab = enterData<int>();
+                int[] result = order(tab, x => x += 100, x => x % 2 == 0);
+                printTable(result);
+            }
+
+            public static void zad848()
+            {
+                double[] tab = enterData<double>();
+                tab = order(tab, x => x = 0, x => x < 0);
+                printTable(tab);
+            }
+
+            public static void zad851()
+            {
+                double[] tab = enterData<double>();
+                for (int i = 0; i < tab.Length; i += 2)
+                    Console.WriteLine(tab[i]);
+            }
+
+            public static void zad852()
+            {
+                double[] tab = enterData<double>();
+                for (int i = 1; i < tab.Length; i++)
+                {
+                    if (i * i < tab.Length)
+                        Console.WriteLine(tab[i * i]);
                     else
                         break;
                 }
-                if (value == 0)
-                    Console.WriteLine(tab[i]);
             }
-        }
 
-        static void zad846()
-        {
-            int[] tab = enterData<int>();
-            for (int i = 0; i < tab.Length; i++)
+            public static void zad861()
             {
-                int value = tab[i];
-                int sum = 0;
-                while (value != 0)
-                {
-                    sum = sum + (value % 10);
-                    value /= 10;
-                }
-                if (sum == 1)
-                    Console.WriteLine(tab[i]);
+                int n = Convert.ToInt32(Console.ReadLine());
+
+                int[] tab = new int[n];
+
+                for (int i = 0; i < n; i++)
+                    tab[i] = 0;
+
+                for (int i = 2; i * i <= n; i++)
+                    if (tab[i] == 0)
+                        for (int j = i * i; j < n; j += i)
+                            tab[j] = 1;
+
+                for (int i = 2; i < n; i++)
+                    if (tab[i] == 0)
+                        Console.Write(i + " ");
             }
-        }
 
-        static void zad847()
-        {
-            int[] tab = enterData<int>();
-            int[] result = order(tab, x => x += 100, x => x % 2 == 0);
-            printTable(result);
-        }
-
-        static void zad848()
-        {
-            double[] tab = enterData<double>();
-            tab = order(tab, x => x = 0, x => x < 0);
-            printTable(tab);
-        }
-
-        static void zad851()
-        {
-            double[] tab = enterData<double>();
-            for (int i = 0; i < tab.Length; i += 2)
-                Console.WriteLine(tab[i]);
-        }
-
-        static void zad852()
-        {
-            double[] tab = enterData<double>();
-            for (int i = 1; i < tab.Length; i++)
+            public static void zad862()
             {
-                if (i * i < tab.Length)
-                    Console.WriteLine(tab[i * i]);
-                else
-                    break;
+                int[] tab = fibonacciSequence(35);
+                printTable(tab);
             }
-        }
 
-        static void zad861()
-        {
-            int n = Convert.ToInt32(Console.ReadLine());
+            public static void zad863()
+            {
+                int[] tab = { 2, 7, 4, 9, 3, 5, -3, -123, -124326, 345, 123, 123, 123, 11111, 342, 324, 5, 5, 4, 4, 1, -1, 1, -1, 0, 5, 2, 2, 2, 444, -444, 4 };
+                sortTableMin(tab);
+                printTable(tab);
+            }
 
-            int[] tab = new int[n];
+            public static void zad864()
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
+                int[] tabA = generateTable<int>(n, x => x);
+                int[] tabB = generateTable<int>(n, x => x = x + 7);
+                int[] tabC = generateTable<int>(n, x => x = 4 * (x + 1));
+                int[] tabD = generateTable<int>(n, x => x = Convert.ToInt32(Math.Pow(2, x)));
+                int[] tabE = generateTable<int>(n, x => x = 2 + x);
 
-            for (int i = 0; i < n; i++)
-                tab[i] = 0;
+                //fibonacci test
+                double[] tabF = generateTable<double>(n, x => x == 0 ? 0 : x = Math.Round((1 / Math.Sqrt(5)) * (Math.Pow(((1 + Math.Sqrt(5)) / 2), x)) - (Math.Pow(((1 - Math.Sqrt(5)) / 2), x))));
 
-            for (int i = 2; i * i <= n; i++)
-                if (tab[i] == 0)
-                    for (int j = i * i; j < n; j += i)
-                        tab[j] = 1;
-
-            for (int i = 2; i < n; i++)
-                if (tab[i] == 0)
-                    Console.Write(i + " ");
-        }
-
-        static void zad862()
-        {
-            int[] tab = fibonacciSequence(35);
-            printTable(tab);
-        }
-
-        static void zad863()
-        {
-            int[] tab = { 2, 7, 4, 9, 3, 5, -3, -123, -124326, 345, 123, 123, 123, 11111, 342, 324, 5, 5, 4, 4, 1, -1, 1, -1, 0, 5, 2, 2, 2, 444, -444, 4 };
-            sortTableMin(tab);
-            printTable(tab);
-        }
-
-        static void zad864()
-        {
-            int n = Convert.ToInt32(Console.ReadLine());
-            int[] tabA = generateTable<int>(n, x => x);
-            int[] tabB = generateTable<int>(n, x => x = x + 7);
-            int[] tabC = generateTable<int>(n, x => x = 4 * (x + 1));
-            int[] tabD = generateTable<int>(n, x => x = Convert.ToInt32(Math.Pow(2,x)));
-            int[] tabE = generateTable<int>(n, x => x = 2 + x);
-
-            //fibonacci test
-            double[] tabF = generateTable<double>(n, x => x == 0 ? 0 : x =Math.Round((1 / Math.Sqrt(5)) * (Math.Pow(((1 + Math.Sqrt(5)) / 2), x)) - (Math.Pow(((1 - Math.Sqrt(5)) / 2), x))));
-
-            Console.Write("a) ");
-            printTable(tabA);
-            Console.Write("b) ");
-            printTable(tabB);
-            Console.Write("c) ");
-            printTable(tabC);
-            Console.Write("d) ");
-            printTable(tabD);
-            Console.Write("e) ");
-            printTable(tabE);
-            Console.Write("f) ");
-            printTable(tabF);
+                Console.Write("a) ");
+                printTable(tabA);
+                Console.Write("b) ");
+                printTable(tabB);
+                Console.Write("c) ");
+                printTable(tabC);
+                Console.Write("d) ");
+                printTable(tabD);
+                Console.Write("e) ");
+                printTable(tabE);
+                Console.Write("f) ");
+                printTable(tabF);
+            }
         }
 
         static void Main(string[] args)
         {
-            int[] tab = { 1, 2, 3, 4, 5 };
-
-            if (tab[0] == tab[tab.Length - 1])
-                Console.WriteLine("TRUE");
-            else
-            {
-                Console.WriteLine("FALSE");
-            }
+            Zadania.zad861();
         }
     }
 }
